@@ -1,0 +1,106 @@
+# Synthetic Zero Trust mesh. Every principal, device, and resource here is
+# fictional. Do not replace these values with production identities.
+name: acme-mesh
+trust_domain: mesh.internal
+
+principals:
+  - id: alice
+    kind: human
+    display_name: Alice (Site Reliability Engineer)
+    roles: [sre]
+    groups: [platform]
+  - id: bob
+    kind: human
+    display_name: Bob (Finance Analyst)
+    roles: [analyst]
+    groups: [finance]
+  - id: ci-deployer
+    kind: workload
+    display_name: CI Deployment Robot
+    roles: [deployer]
+    groups: [platform]
+  - id: vendor-auditor
+    kind: human
+    display_name: External Compliance Auditor
+    roles: [auditor]
+    groups: [external]
+
+devices:
+  - id: laptop-alice
+    owner: alice
+    label: Alice corporate laptop
+    posture:
+      managed: true
+      disk_encrypted: true
+      screen_lock: true
+      firewall: true
+      edr_active: true
+      secure_boot: true
+      os_patch_age_days: 3
+  - id: laptop-bob
+    owner: bob
+    label: Bob corporate laptop
+    posture:
+      managed: true
+      disk_encrypted: true
+      screen_lock: true
+      firewall: true
+      edr_active: true
+      secure_boot: false
+      os_patch_age_days: 20
+  - id: byod-vendor
+    owner: vendor-auditor
+    label: Vendor personal device
+    posture:
+      managed: false
+      disk_encrypted: false
+      screen_lock: true
+      firewall: false
+      edr_active: false
+      secure_boot: false
+      os_patch_age_days: 200
+  - id: ci-runner
+    owner: ci-deployer
+    label: Ephemeral CI runner
+    posture:
+      managed: true
+      disk_encrypted: true
+      screen_lock: false
+      firewall: true
+      edr_active: true
+      secure_boot: true
+      os_patch_age_days: 5
+
+resources:
+  - id: payments-db
+    service: payments
+    sensitivity: restricted
+    description: Core payments ledger
+  - id: customer-pii
+    service: crm
+    sensitivity: restricted
+    description: Customer personal-data store
+  - id: deploy-pipeline
+    service: cicd
+    sensitivity: confidential
+    description: Production deployment pipeline
+  - id: audit-logs
+    service: audit
+    sensitivity: confidential
+    description: Append-only audit log store
+  - id: metrics-dashboard
+    service: observability
+    sensitivity: internal
+    description: Platform metrics dashboard
+  - id: status-page
+    service: web
+    sensitivity: public
+    description: Public service status page
+
+services:
+  - { id: payments, namespace: prod, description: Payments ledger service }
+  - { id: crm, namespace: prod, description: Customer relationship service }
+  - { id: cicd, namespace: prod, description: Continuous delivery service }
+  - { id: audit, namespace: prod, description: Audit log service }
+  - { id: observability, namespace: platform, description: Metrics and tracing }
+  - { id: web, namespace: edge, description: Public edge service }

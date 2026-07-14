@@ -1,0 +1,70 @@
+# Access policy for the synthetic mesh. The default effect is deny, so any
+# request that matches no allow rule is refused. Deny rules override allows.
+name: acme-mesh
+default_effect: deny
+
+rules:
+  - id: deny-external-restricted
+    description: External collaborators may never reach restricted data.
+    effect: deny
+    match:
+      groups: [external]
+      sensitivities: [restricted]
+
+  - id: allow-sre-payments
+    description: Site reliability engineers operate the payments ledger.
+    effect: allow
+    match:
+      roles: [sre]
+      services: [payments]
+    min_trust: 82
+    min_assurance: aal2
+    require_managed_device: true
+    forbid_anonymized_network: true
+
+  - id: allow-finance-pii
+    description: Finance analysts read customer PII, stepping up when trust is soft.
+    effect: allow
+    match:
+      groups: [finance]
+      services: [crm]
+    min_trust: 80
+    min_assurance: aal2
+    require_managed_device: true
+    forbid_anonymized_network: true
+    step_up_below_trust: 90
+
+  - id: allow-deployer-cicd
+    description: Deployment robots drive the production pipeline.
+    effect: allow
+    match:
+      roles: [deployer]
+      services: [cicd]
+    min_trust: 70
+    min_assurance: aal2
+    require_managed_device: true
+
+  - id: allow-auditor-audit
+    description: Auditors read audit logs from managed devices only.
+    effect: allow
+    match:
+      roles: [auditor]
+      services: [audit]
+    min_trust: 75
+    require_managed_device: true
+
+  - id: allow-platform-observability
+    description: The platform group views internal metrics.
+    effect: allow
+    match:
+      groups: [platform]
+      services: [observability]
+    min_trust: 55
+    min_assurance: aal1
+
+  - id: allow-any-public
+    description: Public resources are readable by any authenticated principal.
+    effect: allow
+    match:
+      sensitivities: [public]
+    min_trust: 0

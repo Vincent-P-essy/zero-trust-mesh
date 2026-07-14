@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling==1.28.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zero-trust-mesh"
+version = "0.2.0"
+description = "Deterministic continuous-verification Zero Trust access mesh over synthetic identities"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = { file = "LICENSE" }
+authors = [{ name = "Vincent Plessy" }]
+dependencies = [
+  "cryptography>=44,<46",
+  "fastapi>=0.139,<1",
+  "pydantic>=2.13,<3",
+  "pyjwt>=2.10,<3",
+  "pyyaml>=6.0,<7",
+  "uvicorn[standard]>=0.51,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx2>=2.5,<3",
+  "mypy>=1.20,<2",
+  "pytest>=8.4,<9",
+  "pytest-cov>=7.1,<8",
+  "ruff>=0.15,<1",
+  "types-pyyaml>=6.0,<7",
+]
+
+[project.scripts]
+ztmesh = "zero_trust_mesh.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/zero_trust_mesh"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"fixtures/mesh.yaml" = "zero_trust_mesh/data/mesh.yaml"
+"fixtures/policies.yaml" = "zero_trust_mesh/data/policies.yaml"
+"fixtures/ground-truth.json" = "zero_trust_mesh/data/ground-truth.json"
+"uv.lock" = "zero_trust_mesh/data/uv.lock"
+"web/app.js" = "zero_trust_mesh/web/app.js"
+"web/index.html" = "zero_trust_mesh/web/index.html"
+"web/style.css" = "zero_trust_mesh/web/style.css"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/tests",
+  "/fixtures",
+  "/web",
+  "/scripts",
+  "/benchmarks",
+  "/docs",
+  "/.github/workflows/ci.yml",
+  "/CONTRIBUTING.md",
+  "/SECURITY.md",
+  "/Dockerfile",
+  "/docker-compose.yml",
+  "/Makefile",
+  "/README.md",
+  "/LICENSE",
+  "/pyproject.toml",
+  "/uv.lock",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --strict-config"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["zero_trust_mesh"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF", "S"]
+ignore = ["S101"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["zero_trust_mesh"]

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zero Trust Mesh</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Zero Trust Mesh</h1>
+      <p id="subtitle">Continuous verification over a synthetic environment.</p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Continuous-verification scenarios</h2>
+        <p class="hint">
+          Each scenario replays a short session. Trust is re-scored on every
+          request, so access can be revoked mid-session when a signal changes.
+        </p>
+        <div id="scenarios" class="scenario-list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Session timeline</h2>
+        <div id="timeline" class="timeline">
+          <p class="hint">Run a scenario to see its verification timeline.</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Explore a request</h2>
+        <form id="request-form" class="grid">
+          <label>Principal
+            <select id="principal"></select>
+          </label>
+          <label>Device
+            <select id="device"></select>
+          </label>
+          <label>Resource
+            <select id="resource"></select>
+          </label>
+          <label>Assurance
+            <select id="assurance">
+              <option value="aal1">aal1 (single factor)</option>
+              <option value="aal2" selected>aal2 (multi factor)</option>
+              <option value="aal3">aal3 (hardware)</option>
+            </select>
+          </label>
+          <label class="checkbox"><input type="checkbox" id="corporate" checked /> Corporate network</label>
+          <label class="checkbox"><input type="checkbox" id="tor" /> Tor exit</label>
+          <button type="submit">Authorize</button>
+        </form>
+        <div id="decision" class="decision"></div>
+      </section>
+    </main>
+
+    <footer>
+      <span id="mesh-meta"></span>
+      <a href="/docs">OpenAPI</a>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

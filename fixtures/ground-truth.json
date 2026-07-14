@@ -1,0 +1,38 @@
+{
+  "anonymized-network-deny": {
+    "effects": ["deny"],
+    "final_state": "active"
+  },
+  "baseline-permit": {
+    "effects": ["permit"],
+    "final_state": "active"
+  },
+  "external-restricted-deny": {
+    "effects": ["deny"],
+    "final_state": "active"
+  },
+  "impossible-travel-deny": {
+    "effects": ["permit", "deny"],
+    "final_state": "active"
+  },
+  "posture-drop-revoke": {
+    "effects": ["permit", "deny", "deny"],
+    "final_state": "revoked"
+  },
+  "public-low-trust-permit": {
+    "effects": ["permit"],
+    "final_state": "active"
+  },
+  "step-up-required": {
+    "effects": ["step_up"],
+    "final_state": "step_up_required"
+  },
+  "token-revoked-mid-session": {
+    "effects": ["permit", "deny"],
+    "final_state": "revoked"
+  },
+  "unmanaged-audit-deny": {
+    "effects": ["deny"],
+    "final_state": "active"
+  }
+}
