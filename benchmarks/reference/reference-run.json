@@ -1,0 +1,15 @@
+{
+  "deterministic": true,
+  "elapsed_seconds": 7.8176,
+  "ground_truth_verified": true,
+  "iterations": 200,
+  "latency_pass_p50_ms": 37.7137,
+  "latency_pass_p95_ms": 47.8382,
+  "latency_request_mean_ms": 3.0034,
+  "matched_scenarios": 9,
+  "report_hash": "d1ce95268003e5e9d02ca370d62994ebe6630b2684be40ce46eba7d814922834",
+  "scenarios": 9,
+  "source_revision": "reference",
+  "source_tree_state": "clean-checkout",
+  "steps_per_pass": 13
+}
