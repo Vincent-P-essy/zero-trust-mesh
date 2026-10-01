@@ -21,6 +21,12 @@ and every decision carries the trust factors and policy rule that justified it.
 It is a portfolio-grade prototype over synthetic data, not a replacement for a
 production identity provider, service mesh, or policy platform.
 
+## Running example
+
+![zero-trust-mesh running locally](docs/screenshots/application.png)
+
+Access decisions and session re-evaluation in the bundled synthetic mesh. [Commands and test results](docs/verification.md).
+
 ## Measured evidence
 
 | Measurement | Reviewed result | Scope |
