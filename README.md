@@ -21,11 +21,13 @@ and every decision carries the trust factors and policy rule that justified it.
 It is a portfolio-grade prototype over synthetic data, not a replacement for a
 production identity provider, service mesh, or policy platform.
 
-## Running example
+## Dashboard Preview
 
-![zero-trust-mesh running locally](docs/screenshots/application.png)
+![Permitted baseline session in the demonstration mesh](docs/screenshots/dashboard-overview.png)
 
-Access decisions and session re-evaluation in the bundled synthetic mesh. [Commands and test results](docs/verification.md).
+![Session revoked after the device posture drops](docs/screenshots/session-revocation.png)
+
+Local synthetic mesh scenarios: baseline access, then revocation after a device stops attesting.
 
 ## Measured evidence
 
